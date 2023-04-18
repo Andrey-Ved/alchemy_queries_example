@@ -4,7 +4,7 @@ from alchemy_queries_example.models import Genre, Musician, Album, Track, Collec
 
 
 def queries_printing():
-    print('\n1. All albums from 2018:')
+    print('\n1. All albums from 2010:')
     for item in session_orm.query(Album).filter_by(year=2010):
         print(item.name)
 
@@ -13,14 +13,14 @@ def queries_printing():
             order_by(Track.length.desc()).slice(0, 1):
         print(f'{item.name}, {item.length}')
 
-    print('\n3. Tracks with length not less 3min:')
+    print('\n3. Tracks with length not less 3.5min:')
     for item in session_orm.query(Track). \
             filter(180 <= Track.length).order_by(Track.length.desc()):
         print(f'{item.name}, {item.length}')
 
-    print('\n4. Collections between 2018 and 2020 years (inclusive):')
+    print('\n4. Collections between 2011 and 2015 years (inclusive):')
     for item in session_orm.query(Collection). \
-            filter(2018 <= Collection.year, Collection.year <= 2020):
+            filter(2011 <= Collection.year, Collection.year <= 2015):
         print(item.name)
 
     print('\n5. Musicians with name that contains not more 1 word:')
