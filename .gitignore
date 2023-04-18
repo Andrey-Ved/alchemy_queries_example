@@ -127,3 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/alchemy_queries_example/sqlite_orm.db
