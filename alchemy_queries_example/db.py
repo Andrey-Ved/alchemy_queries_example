@@ -8,11 +8,11 @@ import alchemy_queries_example.models as models
 def clear_db(engine):
     meta = MetaData()
     meta.reflect(bind=engine)
-    con = engine.connect()
-    trans = con.begin()
-    for table in meta.sorted_tables:
-        con.execute(table.delete())
-    trans.commit()
+    with engine.connect() as conn:
+        trans = conn.begin()
+        for table in meta.sorted_tables:
+            conn.execute(table.delete())
+        trans.commit()
 
 
 DATABASE_NAME_ORM = 'sqlite_orm.db'
