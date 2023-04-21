@@ -81,14 +81,14 @@ def queries_printing():
     for item in session_orm.query(Musician, Track.length). \
             join(Musician.albums).join(Track). \
             group_by(Musician.id, Track.length). \
-            having(Track.length == subquery).order_by(Musician.name):
+            having(Track.length == subquery.scalar_subquery()).order_by(Musician.name):
         print(f'{item[0].name}, {item[1]}')
 
     print('\n15. Albums with minimum number of tracks:')
     subquery1 = session_orm.query(func.count(Track.id)). \
         group_by(Track.album_id).order_by(func.count(Track.id)).limit(1)
     subquery2 = session_orm.query(Track.album_id). \
-        group_by(Track.album_id).having(func.count(Track.id) == subquery1)
+        group_by(Track.album_id).having(func.count(Track.id) == subquery1.scalar_subquery())
 
     for item in session_orm.query(Album).join(Track). \
             filter(Track.album_id.in_(subquery2)).order_by(Album.name):
